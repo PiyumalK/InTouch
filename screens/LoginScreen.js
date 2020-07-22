@@ -1,4 +1,5 @@
 import React from 'react'
+import Firebase from 'firebase'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 // import Icon from 'react-native-vector-icons/Ionicons'
@@ -16,11 +17,20 @@ console.warn = message => {
 
 export default class LoginScreen extends React.Component {
     state = {
-        name: ""
+        name: "",
+        email: "",
+        password: "",
     }
 
     continue = () => {
-        this.props.navigation.navigate("Chat", {name: this.state.name})
+        const { email, password } = this.state
+        Firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+            this.props.navigation.navigate("Chat", {name: this.state.name})
+        })
+        .catch(() => {
+            console.log("Authentication failed")
+        })
     }
 
     render() {
@@ -34,19 +44,19 @@ export default class LoginScreen extends React.Component {
                     <Text style={styles.header}>InTouch</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Username"
-                        onChangeText={name => {
-                            this.setState({name})}
+                        placeholder="Email"
+                        onChangeText={email => {
+                            this.setState({email})}
                         }
-                        value={this.state.name}
+                        value={this.state.email}
                     />
                     <TextInput
                         style={styles.input}
                         placeholder="Password"
-                        onChangeText={name => {
-                            this.setState({name})}
+                        onChangeText={password => {
+                            this.setState({password})}
                         }
-                        value={this.state.name}
+                        value={this.state.password}
                     />
 
                     <View style={{ alignItems: "flex-end", marginTop: 64 }}>
