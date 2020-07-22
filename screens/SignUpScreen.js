@@ -1,7 +1,7 @@
 import React from 'react'
+import Firebase from 'firebase'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-// import Icon from 'react-native-vector-icons/Ionicons'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -14,13 +14,23 @@ console.warn = message => {
   }
 };
 
-export default class LoginScreen extends React.Component {
+export default class SignUpScreen extends React.Component {
     state = {
-        name: ""
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
     }
 
-    continue = () => {
-        this.props.navigation.navigate("Chat", {name: this.state.name})
+    signUp = () => {
+        const { name, email, password, confirmPassword } = this.state
+        Firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+            this.props.navigation.navigate("Login", {name: this.state.name})
+        })
+        .catch(() => {
+            console.log("Authentication failed")
+        })
     }
 
     render() {
@@ -32,6 +42,8 @@ export default class LoginScreen extends React.Component {
                 </View>
                 <View style={{ marginHorizontal: 32 }}>
                     <Text style={styles.header}>InTouch</Text>
+                    <View style={{ height: 20 }} />
+                    <Text>Enter your details...</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Username"
@@ -42,15 +54,31 @@ export default class LoginScreen extends React.Component {
                     />
                     <TextInput
                         style={styles.input}
-                        placeholder="Password"
-                        onChangeText={name => {
-                            this.setState({name})}
+                        placeholder="Email"
+                        onChangeText={email => {
+                            this.setState({email})}
                         }
-                        value={this.state.name}
+                        value={this.state.email}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Password"
+                        onChangeText={password => {
+                            this.setState({password})}
+                        }
+                        value={this.state.password}
+                    />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirm Password"
+                        onChangeText={confirmPassword => {
+                            this.setState({confirmPassword})}
+                        }
+                        value={this.state.confirmPassword}
                     />
 
                     <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                        <TouchableOpacity style={styles.continue} onPress={this.continue}>
+                        <TouchableOpacity style={styles.continue} onPress={this.signUp}>
                             <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
                          </TouchableOpacity>
                     </View>
@@ -101,9 +129,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#9075E3",
         alignItems: "center",
         justifyContent: "center"
-    },
-    icon: {
-        color: "#FFF"
     },
     button: {
         
