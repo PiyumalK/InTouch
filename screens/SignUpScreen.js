@@ -1,10 +1,20 @@
 import React from 'react'
 import Firebase from 'firebase'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
+import { 
+    Text,
+    View, 
+    StyleSheet, 
+    TextInput, 
+    TouchableOpacity, 
+    Image,
+    KeyboardAvoidingView,
+} from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
+import { ScrollView } from 'react-native-gesture-handler'
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -35,15 +45,20 @@ export default class SignUpScreen extends React.Component {
 
     render() {
         return (
+            <ScrollView>
+            <KeyboardAwareScrollView>
+
+            
+            
             <View style={styles.container}>
                 <View style={styles.circle} />
+                
+
                 <View style={{ marginTop: 64 }}>
-                    <Image style={styles.image} source={require("../assets/chat.png")} />
+                    <Image style={styles.image} source={require("../assets/logo.png")} />
                 </View>
                 <View style={{ marginHorizontal: 32 }}>
-                    <Text style={styles.header}>InTouch</Text>
-                    <View style={{ height: 20 }} />
-                    <Text>Enter your details...</Text>
+                    <Text style={{ fontSize: 20 }}>Enter your details...</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Username"
@@ -51,7 +66,7 @@ export default class SignUpScreen extends React.Component {
                             this.setState({name})}
                         }
                         value={this.state.name}
-                    />
+                        />
                     <TextInput
                         style={styles.input}
                         placeholder="Email"
@@ -59,7 +74,7 @@ export default class SignUpScreen extends React.Component {
                             this.setState({email})}
                         }
                         value={this.state.email}
-                    />
+                        />
                     <TextInput
                         style={styles.input}
                         placeholder="Password"
@@ -67,7 +82,7 @@ export default class SignUpScreen extends React.Component {
                             this.setState({password})}
                         }
                         value={this.state.password}
-                    />
+                        />
                     <TextInput
                         style={styles.input}
                         placeholder="Confirm Password"
@@ -75,7 +90,7 @@ export default class SignUpScreen extends React.Component {
                             this.setState({confirmPassword})}
                         }
                         value={this.state.confirmPassword}
-                    />
+                        />
 
                     <View style={{ alignItems: "flex-end", marginTop: 64 }}>
                         <TouchableOpacity style={styles.continue} onPress={this.signUp}>
@@ -84,6 +99,8 @@ export default class SignUpScreen extends React.Component {
                     </View>
                 </View>
             </View>
+            </KeyboardAwareScrollView>
+            </ScrollView>
         )
     }
 }
@@ -103,15 +120,10 @@ const styles = StyleSheet.create({
         top: -20
     },
     image: {
-        height: 100,
-        width: 100,
+        marginTop: 30,
+        height: 200,
+        width: 200,
         alignSelf: "center"
-    },
-    header: {
-        fontWeight: "800",
-        fontSize: 30,
-        color: "#514E5A",
-        marginTop: 32
     },
     input: {
         marginTop: 32,

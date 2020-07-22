@@ -36,6 +36,7 @@ export default class HomeScreen extends React.Component {
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>Welcome to In-Touch!</Text>
+                    <View style={{ height: 40 }}></View>
                     <Text style={styles.text}>Let's get you started</Text>
                     <Text style={styles.text}>Sign up to stay in touch with your loved ones</Text>
                 </View>
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // backgroundColor: "#F4F5F7",
-        backgroundColor: "#93c6d2"
+        backgroundColor: "#dbecf0"
     },
     circle: {
         width: 500,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
     buttonContainer: {
-        marginTop: 130,
+        marginTop: 100,
         marginHorizontal: 32,
         flexDirection: "row",
         alignSelf: "center"

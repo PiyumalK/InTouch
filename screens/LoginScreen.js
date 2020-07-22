@@ -38,10 +38,10 @@ export default class LoginScreen extends React.Component {
             <View style={styles.container}>
                 <View style={styles.circle} />
                 <View style={{ marginTop: 64 }}>
-                    <Image style={styles.image} source={require("../assets/chat.png")} />
+                    <Image style={styles.image} source={require("../assets/logo.png")} />
                 </View>
                 <View style={{ marginHorizontal: 32 }}>
-                    <Text style={styles.header}>InTouch</Text>
+                    <Text style={styles.header}>Log In</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Email"
@@ -85,8 +85,9 @@ const styles = StyleSheet.create({
         top: -20
     },
     image: {
+        marginTop: 60,
         height: 100,
-        width: 100,
+        width: 200,
         alignSelf: "center"
     },
     header: {
