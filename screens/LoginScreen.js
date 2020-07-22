@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 // import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -31,20 +31,29 @@ export default class LoginScreen extends React.Component {
                     <Image style={styles.image} source={require("../assets/chat.png")} />
                 </View>
                 <View style={{ marginHorizontal: 32 }}>
-                    <Text style={styles.header}>Username</Text>
+                    <Text style={styles.header}>InTouch</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Enter your name"
+                        placeholder="Username"
                         onChangeText={name => {
                             this.setState({name})}
                         }
                         value={this.state.name}
                     />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Password"
+                        onChangeText={name => {
+                            this.setState({name})}
+                        }
+                        value={this.state.name}
+                    />
+
                     <View style={{ alignItems: "flex-end", marginTop: 64 }}>
                         <TouchableOpacity style={styles.continue} onPress={this.continue}>
                             <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
                             {/* <Icon name="ios-redo" style={styles.icon} /> */}
-                        </TouchableOpacity>
+                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -89,12 +98,15 @@ const styles = StyleSheet.create({
     continue: {
         width: 70,
         height: 70,
-        borderWidth: 70 /2,
+        borderRadius: 35,
         backgroundColor: "#9075E3",
         alignItems: "center",
         justifyContent: "center"
     },
     icon: {
         color: "#FFF"
+    },
+    button: {
+        
     }
 });
