@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Firebase from 'firebase'
+import 'firebase/firestore'
 import { 
     Text,
     View, 
@@ -8,6 +9,7 @@ import {
     TouchableOpacity, 
     Image,
     KeyboardAvoidingView,
+    Keyboard,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'
@@ -30,17 +32,27 @@ export default class SignUpScreen extends React.Component {
         email: "",
         password: "",
         confirmPassword: "",
+        
     }
 
     signUp = () => {
-        const { name, email, password, confirmPassword } = this.state
-        Firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            this.props.navigation.navigate("Login", {name: this.state.name})
-        })
-        .catch(() => {
-            console.log("Authentication failed")
-        })
+            const { name, email, password, confirmPassword } = this.state
+            Firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                Firebase
+                .firestore()
+                .collection("users")
+                .doc("users").set({
+                    name: this.state.name,
+                    email: this.state.email,
+                })
+                this.props.navigation.navigate("Login", {name: this.state.name})
+            })
+            .catch((err) => {
+                alert(err)
+                console.log("Authentication failed")
+            })
+        
     }
 
     render() {
@@ -78,6 +90,7 @@ export default class SignUpScreen extends React.Component {
                     <TextInput
                         style={styles.input}
                         placeholder="Password"
+                        secureTextEntry={true}
                         onChangeText={password => {
                             this.setState({password})}
                         }
@@ -86,6 +99,7 @@ export default class SignUpScreen extends React.Component {
                     <TextInput
                         style={styles.input}
                         placeholder="Confirm Password"
+                        secureTextEntry={true}
                         onChangeText={confirmPassword => {
                             this.setState({confirmPassword})}
                         }

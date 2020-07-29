@@ -2,7 +2,7 @@ import React from 'react'
 import Firebase from 'firebase'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-// import Icon from 'react-native-vector-icons/Ionicons'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -20,52 +20,69 @@ export default class LoginScreen extends React.Component {
         name: "",
         email: "",
         password: "",
+        error: "",
+        loading: false,
     }
 
     continue = () => {
+        // this.state({ error: "", loading: true })
+
         const { email, password } = this.state
         Firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
+            // this.state({ error: "", loading: false })
             this.props.navigation.navigate("Chat", {name: this.state.name})
+            console.log(name);
+            console.log("Authentication")
         })
         .catch(() => {
             console.log("Authentication failed")
+            // this.state({ error: "Authentication failed", loading: false})
         })
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.circle} />
-                <View style={{ marginTop: 64 }}>
-                    <Image style={styles.image} source={require("../assets/logo.png")} />
-                </View>
-                <View style={{ marginHorizontal: 32 }}>
-                    <Text style={styles.header}>Log In</Text>
-                    <TextInput
+            <KeyboardAwareScrollView>
+                <View style={styles.container}>
+                    <View style={styles.circle} />
+                    <View style={{ marginTop: 64 }}>
+                        <Image style={styles.image} source={require("../assets/logo.png")} />
+                    </View>
+                    <View style={{ marginHorizontal: 32 }}>
+                        <Text style={styles.header}>Log In</Text>
+                        {/* <TextInput
+                            style={styles.input}
+                            placeholder="Email"
+                            onChangeText={email => {
+                                this.setState({email})}
+                            }
+                            value={this.state.email}
+                        /> */}
+                        <TextInput	   
                         style={styles.input}
-                        placeholder="Email"
-                        onChangeText={email => {
-                            this.setState({email})}
-                        }
-                        value={this.state.email}
+                        placeholder="Username"
+                        onChangeText={name => {
+                            this.setState({name})}
+                        }	                        
+                        value={this.state.name}	                        
                     />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Password"
-                        onChangeText={password => {
-                            this.setState({password})}
-                        }
-                        value={this.state.password}
-                    />
-
-                    <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                        <TouchableOpacity style={styles.continue} onPress={this.continue}>
-                            <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
-                         </TouchableOpacity>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Password"
+                            onChangeText={password => {
+                                this.setState({password})}
+                            }
+                            value={this.state.password}
+                        />
+                        <View style={{ alignItems: "flex-end", marginTop: 64 }}>
+                            <TouchableOpacity style={styles.continue} onPress={this.continue}>
+                                <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }
