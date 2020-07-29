@@ -1,5 +1,6 @@
 import React from 'react'
 import Firebase from 'firebase'
+import 'firebase/firestore'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -25,20 +26,24 @@ export default class LoginScreen extends React.Component {
     }
 
     continue = () => {
-        // this.state({ error: "", loading: true })
-
         const { name, email, password } = this.state
+        // Firebase
+        // .firestore()
+        // .collection("users")
+        // .doc("users")
+        // .get({
+        //     name: this.state.name
+        // })
+
         Firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
-            // this.state({ error: "", loading: false })
             this.props.navigation.navigate("Chat", {name: this.state.name})
-            console.log(name);
+            console.log(Firebase.auth().currentUser.name);
             console.log("Authentication")
         })
         .catch((err) => {
             alert(err)
             console.log("Authentication failed")
-            // this.state({ error: "Authentication failed", loading: false})
         })
     }
 
@@ -52,25 +57,26 @@ export default class LoginScreen extends React.Component {
                     </View>
                     <View style={{ marginHorizontal: 32 }}>
                         <Text style={styles.header}>Log In</Text>
-                        {/* <TextInput
+                        <TextInput
                             style={styles.input}
                             placeholder="Email"
                             onChangeText={email => {
                                 this.setState({email})}
                             }
                             value={this.state.email}
-                        /> */}
-                        <TextInput	   
+                        />
+                        {/* <TextInput	   
                         style={styles.input}
                         placeholder="Username"
                         onChangeText={name => {
                             this.setState({name})}
                         }	                        
                         value={this.state.name}	                        
-                    />
+                        /> */}
                         <TextInput
                             style={styles.input}
                             placeholder="Password"
+                            secureTextEntry={true}
                             onChangeText={password => {
                                 this.setState({password})}
                             }
@@ -96,7 +102,7 @@ const styles = StyleSheet.create({
     circle: {
         width: 500,
         height: 500,
-        borderRadius: 500 / 2,
+        borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
         left: -120,
