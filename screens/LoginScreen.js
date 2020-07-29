@@ -27,7 +27,7 @@ export default class LoginScreen extends React.Component {
     continue = () => {
         // this.state({ error: "", loading: true })
 
-        const { email, password } = this.state
+        const { name, email, password } = this.state
         Firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
             // this.state({ error: "", loading: false })
@@ -35,7 +35,8 @@ export default class LoginScreen extends React.Component {
             console.log(name);
             console.log("Authentication")
         })
-        .catch(() => {
+        .catch((err) => {
+            alert(err)
             console.log("Authentication failed")
             // this.state({ error: "Authentication failed", loading: false})
         })
