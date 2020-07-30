@@ -47,7 +47,7 @@ export default class SignUpScreen extends React.Component {
                 //     name: this.state.name,
                 //     email: this.state.email,
                 // })
-                Firebase.database().ref('users/' + Firebase.uid).set({
+                Firebase.database().ref('users/' + Firebase.auth().currentUser.uid).set({
                     name: this.state.name,
                     email: this.state.email
                 })
