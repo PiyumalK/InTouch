@@ -14,16 +14,18 @@ console.warn = message => {
 };
 
 export default class HomeScreen extends React.Component {
-    state = {
-        name: ""
-    }
+    // state = {
+    //     name: ""
+    // }
 
     Login = () => {
-        this.props.navigation.navigate("Login", {name: this.state.name})
+        // this.props.navigation.navigate("Login", {name: this.state.name})
+        this.props.navigation.navigate("Login")
     }
 
     SignUp = () => {
-        this.props.navigation.navigate("SignUp", {name: this.state.name})
+        // this.props.navigation.navigate("SignUp", {name: this.state.name})
+        this.props.navigation.navigate("SignUp")
     }
 
     render() {
@@ -67,7 +69,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // backgroundColor: "#F4F5F7",
-        backgroundColor: "#dbecf0"
+        // backgroundColor: "#dbecf0",
+        backgroundColor: "#81bdca"
     },
     circle: {
         width: 500,

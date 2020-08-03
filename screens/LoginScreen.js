@@ -21,8 +21,6 @@ export default class LoginScreen extends React.Component {
         name: "",
         email: "",
         password: "",
-        error: "",
-        loading: false,
     }
 
     continue = () => {
@@ -38,8 +36,9 @@ export default class LoginScreen extends React.Component {
         Firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
             this.props.navigation.navigate("Chat", {name: this.state.name})
-            console.log(Firebase.auth().currentUser.name);
-            console.log("Authentication")
+            // console.log(Firebase.auth().currentUser.name);
+            // console.log(Firebase.database().get("users"))
+            console.log("Authentication success")
         })
         .catch((err) => {
             alert(err)

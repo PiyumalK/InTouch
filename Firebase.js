@@ -68,6 +68,10 @@ class Firebase {
     get uid() {
         return (firebase.auth().currentUser || {}).uid
     }
+
+    // get name() {
+    //     return firebase.database().ref("users/" +  + "name")
+    // }
 }
 
 export default new Firebase();

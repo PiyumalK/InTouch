@@ -2,6 +2,8 @@ import React from 'react'
 import { Platform, KeyboardAvoidingView, SafeAreaView } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
+import firebase from 'firebase'
+// import 'firebase/firestore'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -16,15 +18,43 @@ console.warn = message => {
 
 export default class ChatScreen extends React.Component {
     state = {
+        name: '',
         messages: []
     }
+    
+    readUserData() {
+        firebase
+        .database()
+        .ref("users/" + firebase.auth().currentUser.uid)
+        .on("value", (snapshot) => {
+            console.log(snapshot.val().name)
+            return snapshot.val().name
+        })
+    }
+
+    // readUserData() {
+    //     firebase.firestore()
+    //     .collection("users")
+    //     .doc("users")
+    //     .get()
+    //     .then((doc) => {
+    //         if(doc.exists) console.log(doc.data())
+    //         else console.log("Not found")
+    //     })
+    //     .catch((err) => {
+    //         alert(err)
+    //     })
+    // }
 
     get user() {
         return {
             _id: Firebase.uid,
-            name: this.props.navigation.state.params.name
+            // name: this.props.navigation.state.params.name
+            // name: firebase.database().ref("users/" + Firebase.uid + "name")
+            name: this.readUserData()
         }
     }
+
 
     componentDidMount() {
         Firebase.get(message => 
