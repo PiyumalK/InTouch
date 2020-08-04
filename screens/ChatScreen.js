@@ -3,7 +3,6 @@ import { Platform, KeyboardAvoidingView, SafeAreaView, StyleSheet, View } from '
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
 import { Ionicons } from '@expo/vector-icons'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import firebase from 'firebase'
 
 import { YellowBox } from 'react-native';
@@ -108,20 +107,21 @@ export default class ChatScreen extends React.Component {
                         loadEarlier={true}
                         renderUsernameOnMessage={true}
                         // renderInputToolbar={props => this.customInputToolbar(props)}
-                        // renderSend={props => this.customSend(props)}
                         renderSend={this.renderSend}
                     />;
 
-        // if(Platform.OS === 'android') {
-        //     return(
-        //         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={30} enabled>
-        //             {chat}
-        //         </KeyboardAvoidingView>
-        //         // <KeyboardAwareScrollView>
-        //         //     {chat}
-        //         // </KeyboardAwareScrollView>
-        //     );
-        // }
+        if(Platform.OS === 'android') {
+            return(
+                <KeyboardAvoidingView
+                    style={{ flex: 1 }}
+                    // behavior="padding"
+                    keyboardVerticalOffset={30}
+                    enabled
+                >
+                    {chat}
+                </KeyboardAvoidingView>
+            );
+        }
 
         return <SafeAreaView style={{ flex:1 }}>{chat}</SafeAreaView>
         // return <SafeAreaView style={styles.container}>{chat}</SafeAreaView>
