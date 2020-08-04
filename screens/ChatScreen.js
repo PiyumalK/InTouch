@@ -80,7 +80,14 @@ export default class ChatScreen extends React.Component {
 
     renderSend = (props) => {
         return (
-            <Send {...props}>
+            <Send
+                {...props}
+                containerStyle={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginRight: 20
+                }}
+            >
                 <TouchableOpacity>
                     <Ionicons
                         name="md-send"
