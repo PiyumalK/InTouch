@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // backgroundColor: "#F4F5F7",
         // backgroundColor: "#dbecf0",
-        backgroundColor: "#81bdca"
+        backgroundColor: "#81bdca",
     },
     circle: {
         width: 500,

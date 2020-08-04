@@ -1,12 +1,13 @@
 import React from 'react'
-import { Platform, KeyboardAvoidingView, SafeAreaView } from 'react-native'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { Platform, KeyboardAvoidingView, SafeAreaView, StyleSheet, View } from 'react-native'
+import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
+import { Ionicons } from '@expo/vector-icons'
 import firebase from 'firebase'
-// import 'firebase/firestore'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -49,12 +50,6 @@ export default class ChatScreen extends React.Component {
         return {
             _id: Firebase.uid,
             name: this.props.navigation.state.params.name
-            // name: firebase.database().ref("users/" + Firebase.uid + "name")
-            // name: this.readUserData()
-            // name: firebase
-            //         .database()
-            //         .ref("users/" + firebase.auth().currentUser.uid)
-            //         .on("value", (snapshot) => snapshot.val().name)
         }
     }
 
@@ -71,8 +66,36 @@ export default class ChatScreen extends React.Component {
         Firebase.off()
     }
 
+    customInputToolbar = props => {
+        return (
+            <InputToolbar
+                {...props}
+                containerStyle={{
+                    marginRight: 1
+                }}
+            />
+        )
+    }
+
+    customSend = (props) => {
+        return (
+            <TouchableOpacity>
+                <Ionicons name="md-send" size={14} />
+            </TouchableOpacity>
+        )
+    }
+
     render() {
-        const chat = <GiftedChat messages={this.state.messages} onSend={Firebase.send} user={this.user} />;
+        const chat = <GiftedChat
+                        messages={this.state.messages}
+                        onSend={Firebase.send}
+                        user={this.user}
+                        alwaysShowSend={true}
+                        loadEarlier={true}
+                        renderUsernameOnMessage={true}
+                        renderInputToolbar={props => this.customInputToolbar(props)}
+                        renderSend={props => this.customSend(props)}
+                    />;
 
         if(Platform.OS === 'android') {
             return(
@@ -82,7 +105,16 @@ export default class ChatScreen extends React.Component {
             );
         }
 
-        return <SafeAreaView style={{ flex: 1 }}>{chat}</SafeAreaView>
+        // return <SafeAreaView style={{ flex:1, marginTop: 30 }}>{chat}</SafeAreaView>
+        // return <SafeAreaView style={styles.container}>{chat}</SafeAreaView>
+        return <View style={styles.container}>{chat}</View>
     }
 }
 
+const styles=StyleSheet.create({
+    container: {
+        flex: 1,
+        marginTop: 30,
+        backgroundColor: "#F4F5F7"
+    }
+})

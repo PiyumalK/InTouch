@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Firebase from 'firebase'
-import 'firebase/firestore'
 import { 
     Text,
     View, 
@@ -39,14 +38,6 @@ export default class SignUpScreen extends React.Component {
             const { name, email, password, confirmPassword } = this.state
             Firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
-                // Firebase
-                // .firestore()
-                // .collection("users")
-                // .doc("users")
-                // .set({
-                //     name: this.state.name,
-                //     email: this.state.email,
-                // })
                 Firebase.database().ref('users/' + Firebase.auth().currentUser.uid).set({
                     name: this.state.name,
                     email: this.state.email
@@ -157,7 +148,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 35,
-        backgroundColor: "#9075E3",
+        backgroundColor: "#81bdca",
         alignItems: "center",
         justifyContent: "center"
     },

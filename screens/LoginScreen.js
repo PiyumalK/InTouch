@@ -33,19 +33,16 @@ export default class LoginScreen extends React.Component {
         //     name: this.state.name
         // })
 
+
         Firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
             Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
             .once("value", (snapshot) => {
-                console.log(snapshot.val().name)
+                // console.log(snapshot.val().name)
                 this.setState({name: snapshot.val().name})
-                console.log(this.state.name)
+                // console.log(this.state.name)
                 this.props.navigation.navigate("Chat", {name: this.state.name})
             })
-
-
-            // console.log(Firebase.auth().currentUser.name);
-            // console.log(Firebase.database().get("users"))
             console.log("Authentication success")
         })
         .catch((err) => {
@@ -104,7 +101,7 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F4F5F7"
+        backgroundColor: "#F4F5F7",
     },
     circle: {
         width: 500,
@@ -140,7 +137,7 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 35,
-        backgroundColor: "#9075E3",
+        backgroundColor: "#81bdca",
         alignItems: "center",
         justifyContent: "center"
     },
