@@ -3,6 +3,7 @@ import { Platform, KeyboardAvoidingView, SafeAreaView, StyleSheet, View } from '
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
 import { Ionicons } from '@expo/vector-icons'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import firebase from 'firebase'
 
 import { YellowBox } from 'react-native';
@@ -77,11 +78,17 @@ export default class ChatScreen extends React.Component {
         )
     }
 
-    customSend = (props) => {
+    renderSend = (props) => {
         return (
-            <TouchableOpacity>
-                <Ionicons name="md-send" size={14} />
-            </TouchableOpacity>
+            <Send {...props}>
+                <TouchableOpacity>
+                    <Ionicons
+                        name="md-send"
+                        size={35}
+                        color="#81bdca"
+                        />
+                </TouchableOpacity>
+            </Send>
         )
     }
 
@@ -93,21 +100,26 @@ export default class ChatScreen extends React.Component {
                         alwaysShowSend={true}
                         loadEarlier={true}
                         renderUsernameOnMessage={true}
-                        renderInputToolbar={props => this.customInputToolbar(props)}
-                        renderSend={props => this.customSend(props)}
+                        // renderInputToolbar={props => this.customInputToolbar(props)}
+                        // renderSend={props => this.customSend(props)}
+                        renderSend={this.renderSend}
                     />;
 
-        if(Platform.OS === 'android') {
-            return(
-                <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={30} enabled>
-                    {chat}
-                </KeyboardAvoidingView>
-            );
-        }
+        // if(Platform.OS === 'android') {
+        //     return(
+        //         <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={30} enabled>
+        //             {chat}
+        //         </KeyboardAvoidingView>
+        //         // <KeyboardAwareScrollView>
+        //         //     {chat}
+        //         // </KeyboardAwareScrollView>
+        //     );
+        // }
 
-        // return <SafeAreaView style={{ flex:1, marginTop: 30 }}>{chat}</SafeAreaView>
+        return <SafeAreaView style={{ flex:1 }}>{chat}</SafeAreaView>
         // return <SafeAreaView style={styles.container}>{chat}</SafeAreaView>
-        return <View style={styles.container}>{chat}</View>
+        // return <View style={styles.container}>{chat}</View>
+        
     }
 }
 
