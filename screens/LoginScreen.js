@@ -1,6 +1,6 @@
 import React from 'react'
 import Firebase from 'firebase'
-import 'firebase/firestore'
+// import 'firebase/firestore'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -35,7 +35,15 @@ export default class LoginScreen extends React.Component {
 
         Firebase.auth().signInWithEmailAndPassword(email, password)
         .then(() => {
-            this.props.navigation.navigate("Chat", {name: this.state.name})
+            Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
+            .once("value", (snapshot) => {
+                console.log(snapshot.val().name)
+                this.setState({name: snapshot.val().name})
+                console.log(this.state.name)
+                this.props.navigation.navigate("Chat", {name: this.state.name})
+            })
+
+
             // console.log(Firebase.auth().currentUser.name);
             // console.log(Firebase.database().get("users"))
             console.log("Authentication success")

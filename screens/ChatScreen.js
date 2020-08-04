@@ -18,19 +18,18 @@ console.warn = message => {
 
 export default class ChatScreen extends React.Component {
     state = {
-        name: '',
         messages: []
     }
     
-    readUserData() {
-        firebase
-        .database()
-        .ref("users/" + firebase.auth().currentUser.uid)
-        .on("value", (snapshot) => {
-            console.log(snapshot.val().name)
-            return snapshot.val().name
-        })
-    }
+    // readUserData() {
+    //     firebase
+    //     .database()
+    //     .ref("users/" + firebase.auth().currentUser.uid)
+    //     .on("value", (snapshot) => {
+    //         console.log(snapshot.val().name)
+    //         return snapshot.val().name
+    //     })
+    // }
 
     // readUserData() {
     //     firebase.firestore()
@@ -49,9 +48,13 @@ export default class ChatScreen extends React.Component {
     get user() {
         return {
             _id: Firebase.uid,
-            // name: this.props.navigation.state.params.name
+            name: this.props.navigation.state.params.name
             // name: firebase.database().ref("users/" + Firebase.uid + "name")
-            name: this.readUserData()
+            // name: this.readUserData()
+            // name: firebase
+            //         .database()
+            //         .ref("users/" + firebase.auth().currentUser.uid)
+            //         .on("value", (snapshot) => snapshot.val().name)
         }
     }
 
