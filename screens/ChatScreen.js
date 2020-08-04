@@ -1,6 +1,6 @@
 import React from 'react'
-import { Platform, KeyboardAvoidingView, SafeAreaView, StyleSheet, View } from 'react-native'
-import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
+import { Platform, KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native'
+import { GiftedChat, Send } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
 import { Ionicons } from '@expo/vector-icons'
 import firebase from 'firebase'
@@ -66,17 +66,6 @@ export default class ChatScreen extends React.Component {
         Firebase.off()
     }
 
-    customInputToolbar = props => {
-        return (
-            <InputToolbar
-                {...props}
-                containerStyle={{
-                    marginRight: 1
-                }}
-            />
-        )
-    }
-
     renderSend = (props) => {
         return (
             <Send
@@ -106,14 +95,13 @@ export default class ChatScreen extends React.Component {
                         alwaysShowSend={true}
                         loadEarlier={true}
                         renderUsernameOnMessage={true}
-                        // renderInputToolbar={props => this.customInputToolbar(props)}
                         renderSend={this.renderSend}
                     />;
 
         if(Platform.OS === 'android') {
             return(
                 <KeyboardAvoidingView
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, marginTop: 30 }}
                     // behavior="padding"
                     keyboardVerticalOffset={30}
                     enabled
@@ -123,7 +111,7 @@ export default class ChatScreen extends React.Component {
             );
         }
 
-        return <SafeAreaView style={{ flex:1 }}>{chat}</SafeAreaView>
+        return <SafeAreaView style={{ flex:1, }}>{chat}</SafeAreaView>
         // return <SafeAreaView style={styles.container}>{chat}</SafeAreaView>
         // return <View style={styles.container}>{chat}</View>
         
