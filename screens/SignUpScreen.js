@@ -7,8 +7,6 @@ import {
     TextInput, 
     TouchableOpacity, 
     Image,
-    KeyboardAvoidingView,
-    Keyboard,
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'
@@ -35,7 +33,18 @@ export default class SignUpScreen extends React.Component {
     }
 
     signUp = () => {
-            const { name, email, password, confirmPassword } = this.state
+        const { name, email, password, confirmPassword } = this.state
+        if(!name) {
+            alert("Name is required!")
+        } else if(!email) {
+            alert("Email is required!")
+        } else if(!password) {
+            alert("Password is required!")
+        } else if(!confirmPassword) {
+            alert("Please confirm password")
+        } else if(password !== confirmPassword) {
+            alert("Passwords do not match!")
+        } else {
             Firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(() => {
                 Firebase.database().ref('users/' + Firebase.auth().currentUser.uid).set({
@@ -48,68 +57,62 @@ export default class SignUpScreen extends React.Component {
                 alert(err)
                 console.log("Authentication failed")
             })
-        
+        }
     }
 
     render() {
         return (
             <ScrollView>
-            <KeyboardAwareScrollView>
-
-            
-            
-            <View style={styles.container}>
-                <View style={styles.circle} />
-                
-
-                <View style={{ marginTop: 64 }}>
-                    <Image style={styles.image} source={require("../assets/logo.png")} />
-                </View>
-                <View style={{ marginHorizontal: 32 }}>
-                    <Text style={{ fontSize: 20 }}>Enter your details...</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Username"
-                        onChangeText={name => {
-                            this.setState({name})}
-                        }
-                        value={this.state.name}
-                        />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Email"
-                        onChangeText={email => {
-                            this.setState({email})}
-                        }
-                        value={this.state.email}
-                        />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Password"
-                        secureTextEntry={true}
-                        onChangeText={password => {
-                            this.setState({password})}
-                        }
-                        value={this.state.password}
-                        />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Confirm Password"
-                        secureTextEntry={true}
-                        onChangeText={confirmPassword => {
-                            this.setState({confirmPassword})}
-                        }
-                        value={this.state.confirmPassword}
-                        />
-
-                    <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                        <TouchableOpacity style={styles.continue} onPress={this.signUp}>
-                            <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
-                         </TouchableOpacity>
+                <KeyboardAwareScrollView>
+                    <View style={styles.container}>
+                        <View style={styles.circle} />
+                        <View style={{ marginTop: 64 }}>
+                            <Image style={styles.image} source={require("../assets/logo.png")} />
+                        </View>
+                        <View style={{ marginHorizontal: 32 }}>
+                            <Text style={{ fontSize: 20 }}>Enter your details...</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Username"
+                                onChangeText={name => {
+                                    this.setState({name})}
+                                }
+                                value={this.state.name}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Email"
+                                onChangeText={email => {
+                                    this.setState({email})}
+                                }
+                                value={this.state.email}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Password"
+                                secureTextEntry={true}
+                                onChangeText={password => {
+                                    this.setState({password})}
+                                }
+                                value={this.state.password}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Confirm Password"
+                                secureTextEntry={true}
+                                onChangeText={confirmPassword => {
+                                    this.setState({confirmPassword})}
+                                }
+                                value={this.state.confirmPassword}
+                            />
+                            <View style={{ alignItems: "flex-end", marginTop: 64 }}>
+                                <TouchableOpacity style={styles.continue} onPress={this.signUp}>
+                                    <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
-                </View>
-            </View>
-            </KeyboardAwareScrollView>
+                </KeyboardAwareScrollView>
             </ScrollView>
         )
     }

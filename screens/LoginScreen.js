@@ -33,22 +33,27 @@ export default class LoginScreen extends React.Component {
         //     name: this.state.name
         // })
 
-
-        Firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => {
-            Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
-            .once("value", (snapshot) => {
-                // console.log(snapshot.val().name)
-                this.setState({name: snapshot.val().name})
-                // console.log(this.state.name)
-                this.props.navigation.navigate("Chat", {name: this.state.name})
+        if(!email) {
+            alert("Email is required!")
+        } else if(!password) {
+            alert("Password is required!")
+        } else {
+            Firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(() => {
+                Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
+                .once("value", (snapshot) => {
+                    // console.log(snapshot.val().name)
+                    this.setState({name: snapshot.val().name})
+                    // console.log(this.state.name)
+                    this.props.navigation.navigate("Chat", {name: this.state.name})
+                })
+                console.log("Authentication success")
             })
-            console.log("Authentication success")
-        })
-        .catch((err) => {
-            alert(err)
-            console.log("Authentication failed")
-        })
+            .catch((err) => {
+                alert(err)
+                console.log("Authentication failed")
+            })
+        }
     }
 
     render() {

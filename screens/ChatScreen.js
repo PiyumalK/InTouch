@@ -1,9 +1,9 @@
 import React from 'react'
-import { Platform, KeyboardAvoidingView, SafeAreaView, StyleSheet } from 'react-native'
+import { Platform, KeyboardAvoidingView, SafeAreaView, } from 'react-native'
 import { GiftedChat, Send } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
 import { Ionicons } from '@expo/vector-icons'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -29,20 +29,6 @@ export default class ChatScreen extends React.Component {
     //     .on("value", (snapshot) => {
     //         console.log(snapshot.val().name)
     //         return snapshot.val().name
-    //     })
-    // }
-
-    // readUserData() {
-    //     firebase.firestore()
-    //     .collection("users")
-    //     .doc("users")
-    //     .get()
-    //     .then((doc) => {
-    //         if(doc.exists) console.log(doc.data())
-    //         else console.log("Not found")
-    //     })
-    //     .catch((err) => {
-    //         alert(err)
     //     })
     // }
 
@@ -96,12 +82,13 @@ export default class ChatScreen extends React.Component {
                         loadEarlier={true}
                         renderUsernameOnMessage={true}
                         renderSend={this.renderSend}
+                        renderAvatarOnTop={true}
                     />;
 
         if(Platform.OS === 'android') {
             return(
                 <KeyboardAvoidingView
-                    style={{ flex: 1, marginTop: 30 }}
+                    style={{ flex: 1, marginTop: 30, }}
                     // behavior="padding"
                     keyboardVerticalOffset={30}
                     enabled
@@ -112,16 +99,5 @@ export default class ChatScreen extends React.Component {
         }
 
         return <SafeAreaView style={{ flex:1, }}>{chat}</SafeAreaView>
-        // return <SafeAreaView style={styles.container}>{chat}</SafeAreaView>
-        // return <View style={styles.container}>{chat}</View>
-        
     }
 }
-
-const styles=StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 30,
-        backgroundColor: "#F4F5F7"
-    }
-})
