@@ -1,10 +1,10 @@
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
-import LoginScreen from './screens/LoginScreen'
-import ChatScreen from './screens/ChatScreen'
-import HomeScreen from './screens/HomeScreen'
-import SignUpScreen from './screens/SignUpScreen'
+import LoginScreen from './src/LoginScreen'
+import ChatScreen from './src/ChatScreen'
+import HomeScreen from './src/HomeScreen'
+import SignUpScreen from './src/SignUpScreen'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
