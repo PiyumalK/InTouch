@@ -48,6 +48,7 @@ export default class LoginScreen extends React.Component {
                     this.setState({password: ""})
                     // console.log(this.state.name)
                     this.props.navigation.navigate("Chat", {name: this.state.name})
+                    // this.props.navigation.navigate("Dashboard", {name: this.state.name})
                 })
                 console.log("Authentication success")
             })
