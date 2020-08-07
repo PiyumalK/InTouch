@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image, Row } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -14,27 +14,26 @@ console.warn = message => {
 };
 
 export default class HomeScreen extends React.Component {
-    // state = {
-    //     name: ""
-    // }
 
     Login = () => {
-        // this.props.navigation.navigate("Login", {name: this.state.name})
         this.props.navigation.navigate("Login")
     }
 
     SignUp = () => {
-        // this.props.navigation.navigate("SignUp", {name: this.state.name})
         this.props.navigation.navigate("SignUp")
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View style={styles.circle} />
                 <View style={{ marginTop: 64 }}>
-                    {/* <Image style={styles.image} source={require("../assets/chat.png")} /> */}
                     <Image style={styles.image} source={require("../assets/logo.png")} />
+                </View>
+                <View style={styles.owner}>
+                    <Text>Presented by:</Text>
+                    <Text>D.M.P.P.B. Karunathilaka</Text>
+                    <Text>17000793</Text>
                 </View>
                 <View style={styles.textContainer}>
                     <Text style={styles.text}>Welcome to In-Touch!</Text>
@@ -60,7 +59,7 @@ export default class HomeScreen extends React.Component {
                         }}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </SafeAreaView>
         )
     }
 }
@@ -68,23 +67,23 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // backgroundColor: "#F4F5F7",
-        // backgroundColor: "#dbecf0",
         backgroundColor: "#81bdca",
+        marginTop: getStatusBarHeight()
     },
     circle: {
         width: 500,
         height: 500,
-        borderRadius: 500 / 2,
+        borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
         left: -120,
-        top: -20
+        top: -20,
+        marginTop: getStatusBarHeight()
     },
     image: {
         // height: 150,
         // width: 200,
-        marginTop: 60,
+        marginTop: 20,
         width: 300,
         alignSelf: "center"
     },
@@ -105,11 +104,18 @@ const styles = StyleSheet.create({
     textContainer: {
         alignItems: "center",
         padding: 20,
-        paddingHorizontal: 30
+        paddingHorizontal: 30,
+        marginTop: 40,
     },
     text: {
         fontSize: 20,
         textAlign: "center",
         lineHeight: 50,
+    },
+    owner: {
+        fontSize: 20,
+        marginLeft: 25,
+        marginTop: -50,
+        marginLeft: 230,
     }
 });

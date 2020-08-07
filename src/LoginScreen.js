@@ -3,6 +3,7 @@ import Firebase from 'firebase'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F4F5F7",
+        marginTop: getStatusBarHeight()
     },
     circle: {
         width: 500,
@@ -116,7 +118,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
         position: "absolute",
         left: -120,
-        top: -20
+        top: -20,
+        marginTop: getStatusBarHeight()
     },
     image: {
         marginTop: 60,

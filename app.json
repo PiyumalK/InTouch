@@ -23,6 +23,7 @@
     "android": {
       "package": "com.intouch.intouch",
       "versionCode": 1,
+      "permissions": [],
       "icon": "./assets/logo.png"
     },
     "web": {

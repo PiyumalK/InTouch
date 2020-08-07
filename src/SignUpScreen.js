@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
@@ -125,16 +126,18 @@ export default class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F4F5F7"
+        backgroundColor: "#F4F5F7",
+        marginTop: getStatusBarHeight()
     },
     circle: {
         width: 500,
         height: 500,
-        borderRadius: 500 / 2,
+        borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
         left: -120,
-        top: -20
+        top: -20,
+        marginTop: getStatusBarHeight()
     },
     image: {
         marginTop: 30,

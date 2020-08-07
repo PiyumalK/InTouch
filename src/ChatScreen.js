@@ -3,6 +3,7 @@ import { Platform, KeyboardAvoidingView, SafeAreaView, } from 'react-native'
 import { GiftedChat, Send } from 'react-native-gifted-chat'
 import Firebase from '../Firebase'
 import { Ionicons } from '@expo/vector-icons'
+import { getStatusBarHeight } from 'react-native-status-bar-height'
 // import firebase from 'firebase'
 
 import { YellowBox } from 'react-native';
@@ -88,7 +89,7 @@ export default class ChatScreen extends React.Component {
         if(Platform.OS === 'android') {
             return(
                 <KeyboardAvoidingView
-                    style={{ flex: 1, marginTop: 30, }}
+                    style={{ flex: 1, marginTop: getStatusBarHeight(), }}
                     // behavior="padding"
                     keyboardVerticalOffset={30}
                     enabled
