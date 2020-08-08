@@ -25,13 +25,6 @@ export default class LoginScreen extends React.Component {
 
     continue = () => {
         const { name, email, password } = this.state
-        // Firebase
-        // .firestore()
-        // .collection("users")
-        // .doc("users")
-        // .get({
-        //     name: this.state.name
-        // })
 
         if(!email) {
             alert("Email is required!")
@@ -47,8 +40,8 @@ export default class LoginScreen extends React.Component {
                     this.setState({email: ""})
                     this.setState({password: ""})
                     // console.log(this.state.name)
-                    this.props.navigation.navigate("Chat", {name: this.state.name})
-                    // this.props.navigation.navigate("Dashboard", {name: this.state.name})
+                    // this.props.navigation.navigate("Chat", {name: this.state.name})
+                    this.props.navigation.navigate("Dashboard", {name: this.state.name})
                 })
                 console.log("Authentication success")
             })
@@ -61,7 +54,7 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView style={{flex:1}}>
                 <View style={styles.container}>
                     <View style={styles.circle} />
                     <View style={{ marginTop: 64 }}>
@@ -77,14 +70,6 @@ export default class LoginScreen extends React.Component {
                             }
                             value={this.state.email}
                         />
-                        {/* <TextInput	   
-                        style={styles.input}
-                        placeholder="Username"
-                        onChangeText={name => {
-                            this.setState({name})}
-                        }	                        
-                        value={this.state.name}	                        
-                        /> */}
                         <TextInput
                             style={styles.input}
                             placeholder="Password"

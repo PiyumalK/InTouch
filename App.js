@@ -6,6 +6,7 @@ import ChatScreen from './src/ChatScreen'
 import HomeScreen from './src/HomeScreen'
 import SignUpScreen from './src/SignUpScreen'
 import DashboardScreen from './src/DashboardScreen'
+import UpdateScreen from './src/UpdateScreen'
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -13,6 +14,7 @@ const AppNavigator = createStackNavigator({
   SignUp: SignUpScreen,
   Chat: ChatScreen,
   Dashboard: DashboardScreen,
+  Update: UpdateScreen,
 },
 {
   headerMode: "none"
