@@ -1,6 +1,6 @@
 import React from 'react'
 import Firebase from 'firebase'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, } from 'react-native'
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
@@ -32,16 +32,19 @@ export default class DashboardScreen extends React.Component {
         this.props.navigation.navigate("Update", {name: this.state.name})
     }
 
-    componentDidMount() {
+    deleteAccount = () => {
+        console.log("hi")
         Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
-        .on("value", (snapshot) => {
-            this.setState({name: snapshot.val().name})
-            this.setState({email: snapshot.val().email})
-            console.log(this.state.name)
-            console.log(this.state.email)
+        .remove()
+        .then(() => {
+            Firebase.auth().currentUser.delete()
+            this.props.navigation.navigate("Home")
+        })
+        .catch((err) => {
+            alert(err)
         })
     }
-
+    
     render() {
         return (
             <KeyboardAwareScrollView>
@@ -51,34 +54,26 @@ export default class DashboardScreen extends React.Component {
                         <Image style={styles.image} source={require("../assets/logo.png")} />
                     </View>
                     <View style={{ marginHorizontal: 32 }}>
-                    <Text style={styles.header}>Hello {this.state.name}</Text>
-                        {/* <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            onChangeText={email => {
-                                this.setState({email})}
-                            }
-                            value={this.state.email}
-                        /> */}
-                        {/* <TextInput	   
-                        style={styles.input}
-                        placeholder="Username"
-                        onChangeText={name => {
-                            this.setState({name})}
-                        }	                        
-                        value={this.state.name}	                        
-                        /> */}
-                        {/* <TextInput
-                            style={styles.input}
-                            placeholder="Password"
-                            secureTextEntry={true}
-                            onChangeText={password => {
-                                this.setState({password})}
-                            }
-                            value={this.state.password}
-                        /> */}
+                    <Text style={styles.header}>Hello {this.props.navigation.state.params.name}</Text>
                         <View style={{ alignItems: "flex-start", marginTop: 64 }}>
                             <Button color="warning" onPress={this.update}>Update Account</Button>
+                            <Button onPress={ () => {
+                                Alert.alert(
+                                    "Delete account",
+                                    "Are you sure you want to delete your account?",
+                                    [
+                                        {
+                                            text: "Yes",
+                                            onPress: this.deleteAccount
+                                        },
+                                        {
+                                            text: "No",
+                                            onPress: () => {}
+                                        }
+                                    ]
+                                    )
+                                }
+                            }>Delete Account</Button>
                             <Button color="info" onPress={this.continue}>Continue to chat</Button>
                         </View>
                     </View>

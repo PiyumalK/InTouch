@@ -41,8 +41,8 @@ export default class UpdateScreen extends React.Component {
                 name: this.state.name
             })
             .then(() => {
-                this.setState({name: ""})
                 this.props.navigation.navigate("Dashboard", {name: this.state.name})
+                this.setState({name: ""})
             })
             .catch((err) => {
                 alert(err.message)
