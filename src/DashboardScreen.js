@@ -34,7 +34,7 @@ export default class DashboardScreen extends React.Component {
 
     componentDidMount() {
         Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
-        .once("value", (snapshot) => {
+        .on("value", (snapshot) => {
             this.setState({name: snapshot.val().name})
             this.setState({email: snapshot.val().email})
             console.log(this.state.name)

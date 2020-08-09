@@ -28,39 +28,25 @@ export default class UpdateScreen extends React.Component {
     state = {
         name: "",
         email: "",
-        password: "",
-        confirmPassword: "",
         
     }
 
-    signUp = () => {
-        const { name, email, password, confirmPassword } = this.state
+    update = () => {
+        const { name, email } = this.state
         if(!name) {
             alert("Name is required!")
-        } else if(!email) {
-            alert("Email is required!")
-        } else if(!password) {
-            alert("Password is required!")
-        } else if(!confirmPassword) {
-            alert("Please confirm password")
-        } else if(password !== confirmPassword) {
-            alert("Passwords do not match!")
         } else {
-            Firebase.auth().createUserWithEmailAndPassword(email, password)
+            Firebase.database().ref('users/' + Firebase.auth().currentUser.uid)
+            .update({
+                name: this.state.name
+            })
             .then(() => {
-                Firebase.database().ref('users/' + Firebase.auth().currentUser.uid).set({
-                    name: this.state.name,
-                    email: this.state.email
-                })
                 this.setState({name: ""})
-                this.setState({email: ""})
-                this.setState({password: ""})
-                this.setState({confirmPassword: ""})
-                this.props.navigation.navigate("Login")
+                this.props.navigation.navigate("Dashboard", {name: this.state.name})
             })
             .catch((err) => {
-                alert(err)
-                console.log("Authentication failed")
+                alert(err.message)
+                console.log("Upadate failed")
             })
         }
     }
@@ -70,6 +56,7 @@ export default class UpdateScreen extends React.Component {
         .once("value", (snapshot) => {
             this.setState({name: snapshot.val().name})
             this.setState({email: snapshot.val().email})
+            console.log(snapshot.val())
         })
     }
 
@@ -83,43 +70,17 @@ export default class UpdateScreen extends React.Component {
                             <Image style={styles.image} source={require("../assets/logo.png")} />
                         </View>
                         <View style={{ marginHorizontal: 32 }}>
-                            <Text style={{ fontSize: 20 }}>Enter your details...</Text>
+                            <Text style={{ fontSize: 20 }}>Enter your details to update</Text>
                             <TextInput
                                 style={styles.input}
-                                placeholder="Username"
+                                placeholder={this.state.name}
                                 onChangeText={name => {
                                     this.setState({name})}
                                 }
                                 value={this.state.name}
                             />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Email"
-                                onChangeText={email => {
-                                    this.setState({email})}
-                                }
-                                value={this.state.email}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Password"
-                                secureTextEntry={true}
-                                onChangeText={password => {
-                                    this.setState({password})}
-                                }
-                                value={this.state.password}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Confirm Password"
-                                secureTextEntry={true}
-                                onChangeText={confirmPassword => {
-                                    this.setState({confirmPassword})}
-                                }
-                                value={this.state.confirmPassword}
-                            />
                             <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                                <TouchableOpacity style={styles.continue} onPress={this.signUp}>
+                                <TouchableOpacity style={styles.continue} onPress={this.update}>
                                     <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
                                 </TouchableOpacity>
                             </View>
