@@ -8,13 +8,11 @@ import {
     TouchableOpacity, 
     Image,
 } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
-import { ScrollView } from 'react-native-gesture-handler'
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -62,32 +60,29 @@ export default class UpdateScreen extends React.Component {
 
     render() {
         return (
-            <ScrollView>
-                <KeyboardAwareScrollView>
-                    <View style={styles.container}>
-                        <View style={styles.circle} />
-                        <View style={{ marginTop: 64 }}>
-                            <Image style={styles.image} source={require("../assets/logo.png")} />
-                        </View>
-                        <View style={{ marginHorizontal: 32 }}>
-                            <Text style={{ fontSize: 20 }}>Enter your details to update</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder={this.state.name}
-                                onChangeText={name => {
-                                    this.setState({name})}
-                                }
-                                value={this.state.name}
-                            />
-                            <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                                <TouchableOpacity style={styles.continue} onPress={this.update}>
-                                    <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+            <View style={styles.container}>
+                <View style={styles.circle} />
+                <View style={{ flex: 1, }}>
+                    <Image style={styles.image} source={require("../assets/logo.png")} />
+                </View>
+                <View style={{ flex: 2, marginHorizontal: 32, justifyContent: "center" }}>
+                    <Text style={{ fontSize: 20 }}>Enter your details to update</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder={this.state.name}
+                        onChangeText={name => {
+                            this.setState({name})}
+                        }
+                        value={this.state.name}
+                    />
+                    <View style={{ alignItems: "flex-end", marginTop: 64 }}>
+                        <TouchableOpacity style={styles.continue} onPress={this.update}>
+                            <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
+                        </TouchableOpacity>
                     </View>
-                </KeyboardAwareScrollView>
-            </ScrollView>
+                </View>
+                <View style={{ flex: 1, }} />
+            </View>
         )
     }
 }
@@ -104,8 +99,7 @@ const styles = StyleSheet.create({
         borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
-        left: -120,
-        top: -20,
+        right: -120,
         marginTop: getStatusBarHeight()
     },
     image: {

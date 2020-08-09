@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
         marginTop: 50
     },
     owner: {
-        fontSize: 17,
+        fontSize: 14,
     }
 });

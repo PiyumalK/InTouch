@@ -1,8 +1,6 @@
 import React from 'react'
 import Firebase from 'firebase'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { Button } from 'galio-framework'
 
@@ -25,19 +23,24 @@ export default class DashboardScreen extends React.Component {
     }
 
     continue = () => {
-        this.props.navigation.navigate("Chat", {name: this.state.name})
+        // console.log(this.props.navigation.state.params.name)
+        this.props.navigation.navigate("Chat", {name: this.props.navigation.state.params.name})
     }
 
     update = () => {
         this.props.navigation.navigate("Update", {name: this.state.name})
     }
 
+    logout = () => {
+        this.props.navigation.navigate("Home")
+    }
+
     deleteAccount = () => {
-        console.log("hi")
         Firebase.database().ref("users/" + Firebase.auth().currentUser.uid)
         .remove()
         .then(() => {
             Firebase.auth().currentUser.delete()
+            console.log("User deleted")
             this.props.navigation.navigate("Home")
         })
         .catch((err) => {
@@ -47,38 +50,37 @@ export default class DashboardScreen extends React.Component {
     
     render() {
         return (
-            <KeyboardAwareScrollView>
-                <View style={styles.container}>
-                    <View style={styles.circle} />
-                    <View style={{ marginTop: 64 }}>
-                        <Image style={styles.image} source={require("../assets/logo.png")} />
-                    </View>
-                    <View style={{ marginHorizontal: 32 }}>
+            <View style={styles.container}>
+                <View style={styles.circle} />
+                <View style={{ flex: 1, }}>
+                    <Image style={styles.image} source={require("../assets/logo.png")} />
+                </View>
+                <View style={{ flex: 2, marginHorizontal: 32 }}>
                     <Text style={styles.header}>Hello {this.props.navigation.state.params.name}</Text>
-                        <View style={{ alignItems: "flex-start", marginTop: 64 }}>
-                            <Button round color="warning" onPress={this.update}>Update Account</Button>
-                            <Button round onPress={ () => {
-                                Alert.alert(
-                                    "Delete account",
-                                    "Are you sure you want to delete your account?",
-                                    [
-                                        {
-                                            text: "Yes",
-                                            onPress: this.deleteAccount
-                                        },
-                                        {
-                                            text: "No",
-                                            onPress: () => {}
-                                        }
-                                    ]
-                                    )
-                                }
-                            }>Delete Account</Button>
-                            <Button round color= "#50C7C7" onPress={this.continue}>Continue to chat</Button>
-                        </View>
+                    <View style={{ alignItems: "flex-start", marginTop: 64 }}>
+                        <Button round color="warning" onPress={this.update}>Update Account</Button>
+                        <Button round onPress={ () => {
+                            Alert.alert(
+                                "Delete account",
+                                "Are you sure you want to delete your account?",
+                                [
+                                    {
+                                        text: "Yes",
+                                        onPress: this.deleteAccount
+                                    },
+                                    {
+                                        text: "No",
+                                        onPress: () => {}
+                                    }
+                                ]
+                            )
+                        }}>Delete Account</Button>
+                        <Button round color= "info" onPress={this.logout}>Log Out</Button>
+                        <Button round color= "#50C7C7" onPress={this.continue}>Continue to chat</Button>
                     </View>
                 </View>
-            </KeyboardAwareScrollView>
+                <View style={{flex: 1}} />
+            </View>
         )
     }
 }
@@ -95,8 +97,7 @@ const styles = StyleSheet.create({
         borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
-        left: -120,
-        top: -20,
+        right: -120,
         marginTop: getStatusBarHeight()
     },
     image: {

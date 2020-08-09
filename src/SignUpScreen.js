@@ -7,14 +7,18 @@ import {
     TextInput, 
     TouchableOpacity, 
     Image,
+    KeyboardAvoidingView,
+    Dimensions,
+    ScrollView
 } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Ionicons } from '@expo/vector-icons'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
+
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
-import { ScrollView } from 'react-native-gesture-handler'
+// import { ScrollView } from 'react-native-gesture-handler'
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -67,14 +71,15 @@ export default class SignUpScreen extends React.Component {
 
     render() {
         return (
-            <ScrollView>
-                <KeyboardAwareScrollView>
-                    <View style={styles.container}>
+            <View style={styles.container}>
+            {/* <ScrollView style={{ flex: 1,  }} > */}
+                <KeyboardAwareScrollView style={{ flex: 1, }}>
                         <View style={styles.circle} />
-                        <View style={{ marginTop: 64 }}>
+
+                        <View style={{ flex: 2, }}>
                             <Image style={styles.image} source={require("../assets/logo.png")} />
                         </View>
-                        <View style={{ marginHorizontal: 32 }}>
+                        <View style={{ marginHorizontal: 32, flex: 4, }}>
                             <Text style={{ fontSize: 20 }}>Enter your details...</Text>
                             <TextInput
                                 style={styles.input}
@@ -83,7 +88,7 @@ export default class SignUpScreen extends React.Component {
                                     this.setState({name})}
                                 }
                                 value={this.state.name}
-                            />
+                                />
                             <TextInput
                                 style={styles.input}
                                 placeholder="Email"
@@ -91,7 +96,7 @@ export default class SignUpScreen extends React.Component {
                                     this.setState({email})}
                                 }
                                 value={this.state.email}
-                            />
+                                />
                             <TextInput
                                 style={styles.input}
                                 placeholder="Password"
@@ -100,7 +105,7 @@ export default class SignUpScreen extends React.Component {
                                     this.setState({password})}
                                 }
                                 value={this.state.password}
-                            />
+                                />
                             <TextInput
                                 style={styles.input}
                                 placeholder="Confirm Password"
@@ -109,16 +114,19 @@ export default class SignUpScreen extends React.Component {
                                     this.setState({confirmPassword})}
                                 }
                                 value={this.state.confirmPassword}
-                            />
-                            <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                                <TouchableOpacity style={styles.continue} onPress={this.signUp}>
-                                    <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
-                                </TouchableOpacity>
-                            </View>
+                                />
                         </View>
-                    </View>
+                        
+                        <View style={{ flex: 1, flexDirection: "row" }}>
+                                <View style={{ flex: 1}}></View>
+                                <View style={{ flex: 1, alignItems: "center", marginTop: 30}}>
+                                    <TouchableOpacity style={styles.continue} onPress={this.signUp}>
+                                        <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
+                                    </TouchableOpacity>
+                                </View>
+                        </View>
                 </KeyboardAwareScrollView>
-            </ScrollView>
+            </View>
         )
     }
 }
@@ -127,7 +135,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F4F5F7",
-        marginTop: getStatusBarHeight()
+        marginTop: getStatusBarHeight(),
     },
     circle: {
         width: 500,
@@ -135,8 +143,7 @@ const styles = StyleSheet.create({
         borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
-        left: -120,
-        top: -20,
+        right: -120,
         marginTop: getStatusBarHeight()
     },
     image: {
@@ -161,8 +168,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#81bdca",
         alignItems: "center",
         justifyContent: "center"
-    },
-    button: {
-        
     }
 });

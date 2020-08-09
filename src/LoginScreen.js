@@ -7,6 +7,7 @@ import { getStatusBarHeight } from 'react-native-status-bar-height'
 
 import { YellowBox } from 'react-native';
 import _ from 'lodash';
+import { ScrollView } from 'react-native-gesture-handler'
 
 YellowBox.ignoreWarnings(['Setting a timer']);
 const _console = _.clone(console);
@@ -54,39 +55,40 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <KeyboardAwareScrollView style={{flex:1}}>
-                <View style={styles.container}>
-                    <View style={styles.circle} />
-                    <View style={{ marginTop: 64 }}>
-                        <Image style={styles.image} source={require("../assets/logo.png")} />
-                    </View>
-                    <View style={{ marginHorizontal: 32 }}>
-                        <Text style={styles.header}>Log In</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            onChangeText={email => {
-                                this.setState({email})}
-                            }
-                            value={this.state.email}
+            <View style={styles.container}>
+                <View style={styles.circle} />
+                <View style={{ flex: 1, }}>
+                    <Image style={styles.image} source={require("../assets/logo.png")} />
+                </View>
+                <View style={{ flex: 2, marginHorizontal: 32, }}>
+                    <Text style={styles.header}>Log In</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email"
+                        onChangeText={email => {
+                            this.setState({email})}
+                        }
+                        value={this.state.email}
                         />
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Password"
-                            secureTextEntry={true}
-                            onChangeText={password => {
-                                this.setState({password})}
-                            }
-                            value={this.state.password}
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Password"
+                        secureTextEntry={true}
+                        onChangeText={password => {
+                            this.setState({password})}
+                        }
+                        value={this.state.password}
                         />
-                        <View style={{ alignItems: "flex-end", marginTop: 64 }}>
-                            <TouchableOpacity style={styles.continue} onPress={this.continue}>
-                                <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
-                            </TouchableOpacity>
-                        </View>
+                </View>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View style={{ flex: 1 }}></View>
+                    <View style={{ flex: 1, alignItems: "center", marginTop: 30 }}>
+                        <TouchableOpacity style={styles.continue} onPress={this.continue}>
+                            <Ionicons name="md-arrow-round-forward" size={24} color="#FFF" />
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAwareScrollView>
+            </View>
         )
     }
 }
@@ -103,8 +105,7 @@ const styles = StyleSheet.create({
         borderRadius: 250,
         backgroundColor: "#FFF",
         position: "absolute",
-        left: -120,
-        top: -20,
+        right: -120,
         marginTop: getStatusBarHeight()
     },
     image: {
