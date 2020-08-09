@@ -56,8 +56,8 @@ export default class DashboardScreen extends React.Component {
                     <View style={{ marginHorizontal: 32 }}>
                     <Text style={styles.header}>Hello {this.props.navigation.state.params.name}</Text>
                         <View style={{ alignItems: "flex-start", marginTop: 64 }}>
-                            <Button color="warning" onPress={this.update}>Update Account</Button>
-                            <Button onPress={ () => {
+                            <Button round color="warning" onPress={this.update}>Update Account</Button>
+                            <Button round onPress={ () => {
                                 Alert.alert(
                                     "Delete account",
                                     "Are you sure you want to delete your account?",
@@ -74,7 +74,7 @@ export default class DashboardScreen extends React.Component {
                                     )
                                 }
                             }>Delete Account</Button>
-                            <Button color="info" onPress={this.continue}>Continue to chat</Button>
+                            <Button round color= "#50C7C7" onPress={this.continue}>Continue to chat</Button>
                         </View>
                     </View>
                 </View>
